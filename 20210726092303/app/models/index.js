@@ -19,13 +19,13 @@ if (process.env.NODE_ENV == 'development') {
     }
   )
 } else {
-  sequelize = new Sequelize(
+  sequelize = new Sequelize({
     url: process.env.DATABASE_URL,
     dialect: 'psql',
     dialectOptions: {
       ssl: true,
     }
-  )
+  })
 }
 
 fs.readdirSync(__dirname)
