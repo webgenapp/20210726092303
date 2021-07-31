@@ -18,14 +18,14 @@ if (process.env.NODE_ENV == 'development') {
       dialect: process.env.DATABASE_DIALECT,
     }
   )
-} else {
-  sequelize = new Sequelize({
-    url: process.env.DATABASE_URL,
-    dialect: 'psql',
-    dialectOptions: {
-      ssl: true,
+} else if (process.env.NODE_ENV == 'production') {
+  sequelize = new Sequelize(
+    process.env.DATABASE_URL,
+    {
+      dialect: 'postgres',
+      native: true,
     }
-  })
+  )
 }
 
 fs.readdirSync(__dirname)
