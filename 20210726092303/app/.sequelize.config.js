@@ -14,5 +14,8 @@ module.exports = {
   production: {
     url: process.env.DATABASE_URL,
     dialect: 'psql',
+    dialectOptions: {
+      ssl: true,
+    }
   }
 }
