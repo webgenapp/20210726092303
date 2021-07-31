@@ -6,16 +6,27 @@ const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
 const db = {}
 
-const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
-  {
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    dialect: process.env.DATABASE_DIALECT,
-  }
-)
+let seuquelize = null
+if (process.env.NODE_ENV == 'development') {
+  sequelize = new Sequelize(
+    process.env.DATABASE_NAME,
+    process.env.DATABASE_USERNAME,
+    process.env.DATABASE_PASSWORD,
+    {
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT,
+      dialect: process.env.DATABASE_DIALECT,
+    }
+  )
+} else {
+  sequelize = new Sequelize(
+    url: process.env.DATABASE_URL,
+    dialect: 'psql',
+    dialectOptions: {
+      ssl: true,
+    }
+  )
+}
 
 fs.readdirSync(__dirname)
   .filter((file) => {
